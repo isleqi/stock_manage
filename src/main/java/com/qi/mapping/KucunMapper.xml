@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.mapping.KucunMapper">
+
+<select id="get_all_kucun" resultType="com.qi.model.Kucun">
+select * from kucun
+</select>
+
+<select id="get_kucun" parameterType="com.qi.model.Kucun" resultType="com.qi.model.Kucun">
+select *  from kucun where pnum=#{pnum} and snum=#{snum}
+</select>
+
+<insert id="insert_kucun" parameterType="com.qi.model.Kucun">
+insert into kucun values(#{pnum},#{snum},#{count})
+</insert>
+
+<update id="update_kucun" parameterType="com.qi.model.Kucun" >
+update kucun set count=#{count} where pnum=#{pnum} and snum=#{snum}
+</update>
+
+</mapper>

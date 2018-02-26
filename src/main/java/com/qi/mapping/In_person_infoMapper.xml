@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.mapping.In_person_infoMapper">
+
+<select id="get_info" parameterType="com.qi.model.In_person_info" resultType="com.qi.model.In_person_info">
+ select * from in_person_info
+ <where>
+ <if test="in_company!=null">
+ in_company=#{in_company}
+ </if>
+ <if test="in_person!=null">
+ and in_person=#{in_person}
+ </if>
+ </where>
+</select>
+
+<insert id="insert_info" parameterType="com.qi.model.In_person_info">
+insert into in_person_info values(#{in_company},#{in_person},#{tel})
+</insert>
+
+<update id="update_info" parameterType="com.qi.model.In_person_info">
+update in_person_info set tel=#{tel} where in_company=#{in_company} and in_person=#{in_person}
+</update>
+
+<delete id="delete_info" parameterType="com.qi.model.In_person_info">
+delete from in_person_info where in_company=#{in_company} and in_person=#{in_person}
+</delete>
+
+
+</mapper>

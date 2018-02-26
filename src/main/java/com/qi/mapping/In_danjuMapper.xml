@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.mapping.In_danjuMapper">
+<select id="get_danju" parameterType="int" resultType="com.qi.model.In_danju">
+select * from in_danju where in_dnum=#{in_dnum}
+</select>
+
+<select id="count_day" resultType="int">
+select count(*) from in_danju where DATENAME(DAY,date)=#{d}
+</select>
+
+<select id="get_count_day" resultMap="get_all_info">
+select * from in_danju i,product p,in_person_info ip where i.pnum=p.pnum and i.in_company=ip.in_company and i.in_person=ip.in_person and DATENAME(DAY,date)=#{d}
+</select>
+
+<select id="count_mon" resultType="int">
+select count(*) from in_danju where datepart(mm,date)=#{m}
+</select>
+
+<select id="get_count_mon" resultMap="get_all_info">
+select * from in_danju i,product p,in_person_info ip where i.pnum=p.pnum and i.in_company=ip.in_company and i.in_person=ip.in_person and datepart(mm,date)=#{m}
+</select>
+
+<select id="count_year" resultType="int">
+select count(*) from in_danju where DATENAME(YEAR,date)=#{y}
+</select>
+
+<select id="get_count_year" resultMap="get_all_info">
+select * from in_danju i,product p,in_person_info ip 
+ where i.pnum=p.pnum and i.in_company=ip.in_company and i.in_person=ip.in_person and DATENAME(YEAR,date)=#{y}
+</select>
+
+<insert id="insert_danju" useGeneratedKeys="true" keyProperty="in_dnum" parameterType="com.qi.model.In_danju">
+insert into in_danju(pnum,snum,num,in_company,in_person) values(#{pnum},#{snum},#{num},#{in_person_info.in_company},#{in_person_info.in_person})
+</insert>
+
+<update id="update_danju" parameterType="com.qi.model.In_danju">
+update in_danju set pnum=#{product.pnum},snum=#{snum},num=#{num},in_company=#{in_person_info.in_company},in_person=#{in_person_info.in_person} where in_dnum=#{in_dnum}
+</update>
+
+<delete id="delete_danju" parameterType="int">
+delete from in_danju where in_dnum=#{in_dnum}
+</delete>
+
+<select id="get_danju_time"  resultMap="get_product">
+select * from in_danju i,product p where i.pnum=p.pnum and date=#{date,jdbcType=DATE} 
+</select>
+
+
+<resultMap type="com.qi.model.In_danju" id="get_product">
+<id property="in_dnum" column="in_dnum"/>
+<association property="product" column="pnum" javaType="com.qi.model.Product">
+<id property="pnum" column="pnum"/>
+<result property="pname" column="pname"/>
+<result property="model" column="model"/>
+<result property="size" column="size"/>
+<result property="factory" column="factory"/>
+</association>
+
+</resultMap>
+
+<select id="get_all_danju" resultMap="get_all_info">
+select * from in_danju i,product p,in_person_info ip 
+ where i.pnum=p.pnum and i.in_company=ip.in_company and i.in_person=ip.in_person
+</select>
+
+<resultMap type="com.qi.model.In_danju" id="get_all_info">
+<id property="in_dnum" column="in_dnum"/>
+<result property="snum" column="snum"/>
+<result property="num"  column="num"/>
+<result property="date" column="date"/>
+<result property="time" column="time"/>
+
+<association property="product" column="pnum" javaType="com.qi.model.Product">
+<id property="pnum" column="pnum"/>
+<result property="pname" column="pname"/>
+<result property="model" column="model"/>
+<result property="size" column="size"/>
+<result property="factory" column="factory"/>
+</association>
+
+<association javaType="com.qi.model.In_person_info" property="in_person_info" column="{in_company,in_person}">
+<id property="in_company" column="in_company"/>
+<id property="in_person" column="in_person"/>
+<result property="tel" column="tel"/>
+</association>
+
+
+</resultMap>
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.mapping.Out_person_infoMapper">
+
+<select id="get_info"  resultType="com.qi.model.Out_person_info">
+ select * from out_person_info 
+ <where>
+ <if test="out_company!=null">
+ out_company=#{out_company}
+ </if>
+ <if test="out_person!=null">
+ and out_person=#{out_person}
+ </if>
+ </where>
+</select>
+
+
+<insert id="insert_info" parameterType="com.qi.model.Out_person_info">
+insert into out_person_info values(#{out_company},#{out_person},#{tel})
+</insert>
+
+<update id="update_info" parameterType="com.qi.model.Out_person_info">
+update out_person_info set tel=#{tel} where out_company=#{out_company} and out_person=#{out_person}
+</update>
+
+<delete id="delete_info" parameterType="com.qi.model.Out_person_info">
+delete from out_person_info where out_company=#{out_company} and out_person=#{out_person}
+</delete>
+
+</mapper>
