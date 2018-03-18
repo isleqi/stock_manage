@@ -1,5 +1,7 @@
 package com.qi.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,10 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.json.Json;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlInlineBinaryData;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +39,8 @@ import com.qi.model.Kucun;
 import com.qi.model.Out_danju;
 import com.qi.model.Out_person_info;
 import com.qi.model.Product;
+import com.qi.service.ExportExcel_in;
+import com.qi.service.ExportExcel_out;
 import com.qi.service.In_danju_add;
 import com.qi.service.In_danju_update;
 import com.qi.service.Kucun_show;
@@ -71,6 +78,10 @@ public class m_Controller {
 	Result_handle_in result_handle_in;
 	@Autowired
 	Result_handle_out result_handle_out;
+	@Autowired
+	ExportExcel_in excel_in;
+	@Autowired
+	ExportExcel_out excel_out;
 	
 	
    {
@@ -379,6 +390,28 @@ public class m_Controller {
 		}
 		
 	}
+	
+	
+	@RequestMapping(value="/exportExcel_out",method=RequestMethod.POST)
+	@ResponseBody
+	public String exportExcel_out() {
+		List<Out_danju> out=out_danjuMapper.get_all_danju();
+		for (Out_danju out_danju : out) {
+			out_danju=result_handle_out.handle(out_danju);
+		}
+		String[] title= {"单据编号","产品编号","名称","型号","规格","生产产家","仓库编号","数量","出库单位","提货人","电话","日期","时间"};
+		String fileName="\\出库单据";
+		try {
+			excel_out.export(title,out, fileName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "导出失败";
+		}
+		
+		return "导出成功";
+	}
+	
 	
 	
 	

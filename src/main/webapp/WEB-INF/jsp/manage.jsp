@@ -46,6 +46,47 @@ $(document).ready(function () {
 
 </script>
 <script>
+
+                  function exportExcel(type){
+                     // alert("!!!!!!");
+                               if(type=="in"){
+                                                  
+                                        $.ajax({
+                                                      url:"exportExcel_in",
+                                                      dataType: "json",
+                                                      type:"post",
+                                                          success:function(data){
+                                                                   alert(JSON.stringify(data));
+                                                              }
+
+
+                                            });
+                                   }
+                               else{
+
+                            	   $.ajax({
+                                       url:"exportExcel_out",
+                                       dataType: "json",
+                                       type:"post",
+                                           success:function(data){
+                                                    alert(JSON.stringify(data));
+
+                                               }
+
+
+                             });
+
+                                   }
+
+
+
+                      }
+                  
+         
+
+
+
+
        function submit( _type,action,scope){
 
            if(scope=="one")
@@ -401,13 +442,13 @@ $(document).ready(function () {
     		b="出库单位";
     		c="提货人";
     		out.write("产品编号：<input class=\"inin\" type=\"text\" id=\"pnumber\"/> "+"仓库编号：<input class=\"inin\" type=\"text\" id=\"snum\"/><br>"+"数量：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"num\"/> "+b+"：<input type=\"text\" class=\"inin\" id=\"outunits\"/><br>"+c+"&nbsp;&nbsp;：<input type=\"text\" class=\"inin\" id=\"outperson\"/> "+"电话：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"tel\"/><br>");
-        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" value=\"提交\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"show_kucun()\" value=\"显示库存\"/>");
+        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" value=\"提交\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"show_kucun()\" value=\"显示库存\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='导出表格' style='font-size:15px;font-weight: bold;margin-top: 10px;' onclick=\"exportExcel('"+type+"')\">");
     	}
     	else{
     		b="入库单位";
     		c="送货人";
     		out.write("产品编号：<input class=\"inin\" type=\"text\" id=\"pnumber\"/> "+"仓库编号：<input class=\"inin\" type=\"text\" id=\"snum\"/><br>"+"数量：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"num\"/> "+b+"：<input type=\"text\" class=\"inin\" id=\"inunits\"/><br>"+c+"&nbsp;&nbsp;：<input type=\"text\" class=\"inin\" id=\"inperson\"/> "+"电话：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"tel\"/><br>");
-        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" value=\"提交\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"show_kucun()\" value=\"显示库存\"/>");
+        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" value=\"提交\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"show_kucun()\" value=\"显示库存\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='导出表格' style='font-size:15px;font-weight: bold;margin-top: 10px;' onclick=\"exportExcel('"+type+"')\">");
     		
     	}
     	
@@ -420,7 +461,7 @@ $(document).ready(function () {
     		String a="<div style=\"margin-top: 10px;margin-left: 200px\">";
         	out.write(a);
         	out.write("单据编号：<input class=\"inin\" type=\"text\" id=\"danju_number\"/>&nbsp;&nbsp;&nbsp;产品编号：<input class=\"inin\" type=\"text\" id=\"pnumber\"/><br>"+b+"：<input type=\"text\" class=\"inin\" id=\"outunits\"/>&nbsp;&nbsp;&nbsp;"+c+"&nbsp;&nbsp;：<input type=\"text\" class=\"inin\" id=\"outperson\"/><br>仓库编号：<input class=\"inin\" type=\"text\" id=\"snum\"/>&nbsp;&nbsp;&nbsp;数量：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"num\"/><br>电话：&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"text\" class=\"inin\" id=\"tel\"/>&nbsp;&nbsp;&nbsp;");
-        	out.write("<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" value=\"修改\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"show_kucun()\" value=\"显示库存\"/>");
+        	out.write("<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" value=\"修改\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"show_kucun()\" value=\"显示库存\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='导出表格' style='font-size:15px;font-weight: bold;margin-top: 10px;' onclick=\"exportExcel('"+type+"')\">");
         	
     	}
     	else{
@@ -429,7 +470,7 @@ $(document).ready(function () {
     		String a="<div style=\"margin-top: 10px;margin-left: 200px\">";
         	out.write(a);
         	out.write("单据编号：<input class=\"inin\" type=\"text\" id=\"danju_number\"/>&nbsp;&nbsp;&nbsp;产品编号：<input class=\"inin\" type=\"text\" id=\"pnumber\"/><br>"+b+"：<input type=\"text\" class=\"inin\" id=\"inunits\"/>&nbsp;&nbsp;&nbsp;"+c+"&nbsp;&nbsp;：<input type=\"text\" class=\"inin\" id=\"inperson\"/><br>仓库编号：<input class=\"inin\" type=\"text\" id=\"snum\"/>&nbsp;&nbsp;&nbsp;数量：&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"inin\" type=\"text\" id=\"num\"/><br>电话：&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"text\" class=\"inin\" id=\"tel\"/>&nbsp;&nbsp;&nbsp;");
-        	out.write("<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" value=\"修改\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"show_kucun()\" value=\"显示库存\"/>");
+        	out.write("<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" value=\"修改\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;\" onclick=\"show_kucun()\" value=\"显示库存\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='导出表格' style='font-size:15px;font-weight: bold;margin-top: 10px;' onclick=\"exportExcel('"+type+"')\">");
         	
     	}
     	
@@ -442,7 +483,7 @@ $(document).ready(function () {
     		String a="<div style=\"margin-top: 10px;margin-left: 230px\">";
         	out.write(a);
         	out.write("输入出库单据编号：<input class=\"inin\" type=\"text\" id=\"danju_number\"/><br>");
-        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\" value=\"删除\"/>&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>");
+        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\" value=\"删除\"/>&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='导出表格' style='font-size:15px;font-weight: bold;margin-top: 10px;' onclick=\"exportExcel('"+type+"')\">");
     	    
     	}
     	else{
@@ -451,7 +492,7 @@ $(document).ready(function () {
     		String a="<div style=\"margin-top: 10px;margin-left: 230px\">";
         	out.write(a);
         	out.write("输入入库单据编号：<input class=\"inin\" type=\"text\" id=\"danju_number\"/><br>");
-        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\" value=\"删除\"/>&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/>");
+        	out.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','one'"+")\" value=\"删除\"/>&nbsp;&nbsp;<input type=\"button\" style=\"font-size:15px;font-weight: bold;margin-top: 10px;\" onclick=\"submit("+"'"+type+"','"+action+"','all'"+")\" value=\"显示全部\"/><input type='button' style='font-size:15px;font-weight: bold;margin-top: 10px;margin-left:10px' onclick=\"exportExcel('"+type+"')\"  value='导出表格'>");
     	}
     }
 %>
